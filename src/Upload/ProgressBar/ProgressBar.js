@@ -3,11 +3,8 @@ import style from "./ProgressBar.module.css";
 
 const ProgressBar = props => {
   return (
-    <div className={style.ProgressBar}>
-      <div
-        className={style.Progress}
-        style={{ width: this.props.progress + "%" }}
-      />
+    <div className={style.progressBar}>
+      <div className={style.progress} />
     </div>
   );
 };

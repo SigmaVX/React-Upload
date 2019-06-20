@@ -5,77 +5,50 @@ import ProgressBar from "./ProgressBar/ProgressBar";
 import circleImg from "../../public/circle.svg";
 
 class Upload extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      files: [],
-      uploading: false,
-      uploadProgress: {},
-      successfullUploaded: false,
-      errorText: null
-    };
+  state = {
+    files: [],
+    disableAdding: false,
+    uploading: false,
+    successfullUploaded: false,
+    errorText: null
+  };
 
-    // this.onFilesAdded = this.onFilesAdded.bind(this);
-    // this.uploadFiles = this.uploadFiles.bind(this);
-    // this.sendRequest = this.sendRequest.bind(this);
-    // this.renderActions = this.renderActions.bind(this);
-  }
-
+  // Helper State Update
   safeStateUpdate = updateObj => {
     let safeUpdateObj = {
       ...this.state,
       files: [...this.state.files],
-      uploadProgress: { ...this.state.uploadProgress },
       ...updateObj
     };
     console.log("State Updated: ", safeUpdateObj);
     this.setState(safeUpdateObj);
   };
 
-  // Add New File To State
+  // Add New File To State - CB From Dropzone
   onFilesAdded = file => {
-    let updatedFiles = [...this.state.files].concat(file);
-    this.safeStateUpdate({ files: updatedFiles });
+    if (!this.state.disableAdding) {
+      let updatedFiles = [...this.state.files].concat(file);
+      this.safeStateUpdate({ files: updatedFiles, disableAdding: true });
+    }
   };
 
   // Remove Fiels
   clearFiles = () => {
     this.safeStateUpdate({
       files: [],
-      successfullUploaded: false
+      successfullUploaded: false,
+      disableAdding: false
     });
-  };
-
-  // Show Progress On Uploading or Successfull Upload
-  renderProgress = file => {
-    const uploadProgress = this.state.uploadProgress[file.name];
-    if (this.state.uploading || this.state.successfullUploaded) {
-      return (
-        <div className={style.progressWrapper}>
-          <ProgressBar
-            progress={uploadProgress ? uploadProgress.percentage : 0}
-          />
-          <img
-            className={style.checkIcon}
-            alt="done"
-            src={circleImg}
-            style={{
-              opacity:
-                uploadProgress && uploadProgress.state === "done" ? 0.5 : 0
-            }}
-          />
-        </div>
-      );
-    }
   };
 
   // Async File Upload
   uploadFiles = () => {
-    this.safeStateUpdate({ uploadProgress: {}, uploading: true });
+    this.safeStateUpdate({ uploading: true });
     setTimeout(() => {
       this.safeStateUpdate({ uploading: false });
     }, 3000);
 
+    // Code For Production
     // const promises = [];
     // this.state.files.forEach(file => {
     //   promises.push(this.sendRequest(file));
@@ -97,42 +70,9 @@ class Upload extends Component {
   };
 
   // Send File To Server
-  sendRequest(file) {
-    console.log("Uploading File: ", file);
-    // return new Promise((resolve, reject) => {
-    //   const req = new XMLHttpRequest();
-    //   req.upload.addEventListener("progress", event => {
-    //     if (event.lengthComputable) {
-    //       const copy = { ...this.state.uploadProgress };
-    //       copy[file.name] = {
-    //         state: "pending",
-    //         percentage: (event.loaded / event.total) * 100
-    //       };
-    //       this.setState({ uploadProgress: copy });
-    //     }
-    //   });
-
-    //   req.upload.addEventListener("load", event => {
-    //     const copy = { ...this.state.uploadProgress };
-    //     copy[file.name] = { state: "done", percentage: 100 };
-    //     this.setState({ uploadProgress: copy });
-    //     resolve(req.response);
-    //   });
-
-    //   req.upload.addEventListener("error", event => {
-    //     const copy = { ...this.state.uploadProgress };
-    //     copy[file.name] = { state: "error", percentage: 0 };
-    //     this.setState({ uploadProgress: copy });
-    //     reject(req.response);
-    //   });
-
-    //   const formData = new FormData();
-    //   formData.append("file", file, file.name);
-
-    //   req.open("POST", "http://localhost:8000/upload");
-    //   req.send(formData);
-    // });
-  }
+  // sendRequest(file) {
+  //   console.log("Uploading File: ", file);
+  // }
 
   render() {
     return (
@@ -140,11 +80,8 @@ class Upload extends Component {
         <div className={style.dropzoneWrapper}>
           <Dropzone
             onFilesAdded={this.onFilesAdded}
-            disabled={
-              this.state.uploading ||
-              this.state.successfullUploaded ||
-              this.state.files.length > 1
-            }
+            disabled={this.state.disableAdding}
+            fileName={null}
           />
         </div>
         <div className={style.filesWrapper}>
@@ -152,11 +89,19 @@ class Upload extends Component {
             return (
               <div key={file.name} className={style.fileRow}>
                 <span className={style.fileName}>{file.name}</span>
-                {/* {this.renderProgress(file)} */}
+                {this.state.successfullUploaded ? (
+                  <img className={style.checkIcon} alt="done" src={circleImg} />
+                ) : null}
               </div>
             );
           })}
         </div>
+
+        <div className={style.progressWrapper}>
+          {this.state.uploading ? <ProgressBar startBar={true} /> : null}
+        </div>
+
+        {/* Buttons */}
         <div className={style.buttonWrapper}>
           <button
             disabled={this.state.files.length === 0 || this.state.uploading}

@@ -27,12 +27,11 @@ button:disabled {
 
 .FileName {
   margin-bottom: 8px;
-  font-size: 16px;
-  color: #555;
+  font-size: 14px;
 }
 
 .progressWrapper {
-  /* border: solid blue 2px; */
+  border: solid blue 2px;
 }
 
 .fileRow {
@@ -49,11 +48,11 @@ button:disabled {
 .uploadWrapper {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 50% 50%;
-  height: 200px;
+  grid-template-rows: 50% 10% auto;
+  /* height: 200px; */
   width: 100%;
   align-items: stretch;
   justify-items: stretch;
-  border: dotted grey 1px;
+  border: dotted red 1px;
   border-radius: 7px;
 }
