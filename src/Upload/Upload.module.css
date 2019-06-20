@@ -1,56 +1,23 @@
+.buttonsWrapper {
+  grid-row: 2/3;
+  grid-column: 1/2;
+}
+
 button {
-  font-family: "Roboto medium", sans-serif;
-  font-size: 14px;
-  display: inline-block;
-  height: 36px;
-  min-width: 88px;
-  padding: 6px 16px;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 0;
-  border-radius: 2px;
-  background: rgba(103, 58, 183, 1);
-  color: #fff;
-  outline: 0;
+  width: 150px;
+  height: 30px;
 }
 
 button:disabled {
-  background: rgb(189, 189, 189);
-  cursor: default;
+  color: pink;
 }
 
-.Actions {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  align-items: flex-end;
-  flex-direction: column;
-  margin-top: 32px;
-}
-
-.Content {
-  display: flex;
-  flex-direction: row;
-  padding-top: 16px;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.CheckIcon {
+.checkIcon {
   opacity: 0.5;
   margin-left: 32px;
 }
 
-.Files {
+.filesWrapper {
   margin-left: 32px;
   align-items: flex-start;
   justify-items: flex-start;
@@ -58,20 +25,17 @@ button:disabled {
   overflow-y: auto;
 }
 
-.Filename {
+.FileName {
   margin-bottom: 8px;
   font-size: 16px;
   color: #555;
 }
 
-.ProgressWrapper {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
+.progressWrapper {
+  /* border: solid blue 2px; */
 }
 
-.Row {
+.fileRow {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -82,16 +46,14 @@ button:disabled {
   box-sizing: border-box;
 }
 
-.Title {
-  margin-bottom: 32px;
-  color: #555;
-}
-
-.Upload {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: flex-start;
-  text-align: left;
-  overflow: hidden;
+.uploadWrapper {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
+  height: 200px;
+  width: 100%;
+  align-items: stretch;
+  justify-items: stretch;
+  border: dotted grey 1px;
+  border-radius: 7px;
 }
