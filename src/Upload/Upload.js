@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import style from "./Upload.module.css";
 import Dropzone from "./Dropzone/Dropzone";
 import ProgressBar from "./ProgressBar/ProgressBar";
-import circleImg from "../../public/circle.svg";
 
 class Upload extends Component {
   state = {
     files: [],
     disableAdding: false,
     uploading: false,
-    successfullUploaded: false,
+    successfullUpload: false,
     errorText: null
   };
 
@@ -36,7 +35,7 @@ class Upload extends Component {
   clearFiles = () => {
     this.safeStateUpdate({
       files: [],
-      successfullUploaded: false,
+      successfullUpload: false,
       disableAdding: false
     });
   };
@@ -45,7 +44,7 @@ class Upload extends Component {
   uploadFiles = () => {
     this.safeStateUpdate({ uploading: true });
     setTimeout(() => {
-      this.safeStateUpdate({ uploading: false });
+      this.safeStateUpdate({ uploading: false, successfullUpload: true });
     }, 3000);
 
     // Code For Production
@@ -56,13 +55,13 @@ class Upload extends Component {
     // try {
     //   await Promise.all(promises);
     //   this.safeStateUpdate({
-    //     successfullUploaded: true,
+    //     successfullUpload: true,
     //     uploading: false,
     //     errorText: null
     //   });
     // } catch (error) {
     //   this.safeStateUpdate({
-    //     successfullUploaded: false,
+    //     successfullUpload: false,
     //     uploading: false,
     //     errorText: `Upload Failed: ${error}`
     //   });
@@ -81,39 +80,43 @@ class Upload extends Component {
           <Dropzone
             onFilesAdded={this.onFilesAdded}
             disabled={this.state.disableAdding}
-            fileName={null}
+            successfullUpload={this.state.successfullUpload}
+            className={style.dropZone}
+            fileName={
+              this.state.files.length > 0 ? this.state.files[0].name : null
+            }
           />
-        </div>
-        <div className={style.filesWrapper}>
-          {this.state.files.map(file => {
-            return (
-              <div key={file.name} className={style.fileRow}>
-                <span className={style.fileName}>{file.name}</span>
-                {this.state.successfullUploaded ? (
-                  <img className={style.checkIcon} alt="done" src={circleImg} />
-                ) : null}
-              </div>
-            );
-          })}
         </div>
 
         <div className={style.progressWrapper}>
-          {this.state.uploading ? <ProgressBar startBar={true} /> : null}
+          {this.state.uploading ? (
+            <ProgressBar startBar={this.state.uploading} />
+          ) : (
+            <div />
+          )}
         </div>
 
         {/* Buttons */}
         <div className={style.buttonWrapper}>
           <button
-            disabled={this.state.files.length === 0 || this.state.uploading}
-            onClick={this.clearFiles}
-          >
-            Clear
-          </button>
-          <button
-            disabled={this.state.files.length === 0 || this.state.uploading}
+            disabled={
+              this.state.files.length === 0 ||
+              this.state.uploading ||
+              this.state.successfullUpload
+            }
             onClick={this.uploadFiles}
           >
             Upload
+          </button>
+          <button
+            disabled={
+              this.state.files.length === 0 ||
+              this.state.uploading ||
+              this.state.successfullUpload
+            }
+            onClick={this.clearFiles}
+          >
+            Clear
           </button>
         </div>
       </div>

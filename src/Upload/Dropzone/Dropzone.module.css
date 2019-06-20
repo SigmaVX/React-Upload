@@ -1,30 +1,41 @@
+.checkIcon {
+  margin-left: 10px;
+  margin-bottom: -6px;
+}
+
 .Dropzone {
-  height: 150px;
   width: 100%;
-  border: 2px dashed rgb(187, 186, 186);
+  border: 2px dashed #008297;
   font-size: 16px;
   display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 70% 30%;
+  grid-template-rows: auto auto;
+  grid-row-gap: 5px;
   justify-items: center;
   align-items: center;
-}
-
-.DropzoneText {
-  grid-row: 2/3;
-}
-
-.Highlight {
-  background-color: #a2d9da;
+  padding: 15px;
 }
 
 .DropzoneIcon {
   grid-row: 1/2;
   opacity: 0.3;
-  height: 125px;
-  width: 125px;
+  width: 120px;
+}
+
+.DropzoneText {
+  grid-row: 2/3;
+  font-size: 14px;
+  text-align: center;
+  /* margin-top: -5px; */
 }
 
 .FileInput {
   display: none;
+}
+
+.FileName {
+  margin-right: 0px;
+}
+
+.Highlight {
+  background-color: #a2d9da;
 }

@@ -6,16 +6,6 @@ class Dropzone extends Component {
     super(props);
     this.state = { hightlight: false };
     this.fileInputRef = React.createRef();
-
-    // Binding - may not need with arrow function used below
-    // For Upload By Click
-    // this.openFileDialog = this.openFileDialog.bind(this);
-    // this.onFilesAdded = this.onFilesAdded.bind(this);
-
-    // For Drag and Drop
-    // this.onDragOver = this.onDragOver.bind(this);
-    // this.onDragLeave = this.onDragLeave.bind(this);
-    // this.onDrop = this.onDrop.bind(this);
   }
 
   // Highlight On Hover
@@ -64,6 +54,20 @@ class Dropzone extends Component {
   };
 
   render() {
+    let fileName = (
+      <div>
+        <span className={style.FileName}>{this.props.fileName}</span>
+        <span>
+          <img
+            className={style.checkIcon}
+            alt="done"
+            src="./circle.svg"
+            style={{ opacity: this.props.successfullUpload ? "1" : "0.5" }}
+          />
+        </span>
+      </div>
+    );
+
     return (
       <div
         className={[
@@ -84,8 +88,8 @@ class Dropzone extends Component {
 
         <p className={style.DropzoneText}>
           {this.props.fileName
-            ? this.props.fileName
-            : "Drag Files Here Or Click To Upload Files"}
+            ? fileName
+            : "Drag Files Here Or Click To Upload A File"}
         </p>
 
         <input

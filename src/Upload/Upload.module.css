@@ -1,20 +1,19 @@
-.buttonsWrapper {
-  grid-row: 2/3;
-  grid-column: 1/2;
+.buttonWrapper {
+  grid-row: 3/4;
 }
 
 button {
   width: 150px;
   height: 30px;
+  margin: 10px;
 }
 
 button:disabled {
-  color: pink;
+  color: maroon;
 }
 
-.checkIcon {
-  opacity: 0.5;
-  margin-left: 32px;
+.dropzoneWrapper {
+  grid-row: 1/2;
 }
 
 .filesWrapper {
@@ -25,13 +24,8 @@ button:disabled {
   overflow-y: auto;
 }
 
-.FileName {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
 .progressWrapper {
-  border: solid blue 2px;
+  grid-row: 2/3;
 }
 
 .fileRow {
@@ -48,11 +42,9 @@ button:disabled {
 .uploadWrapper {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 50% 10% auto;
-  /* height: 200px; */
+  grid-template-rows: auto 10px auto;
   width: 100%;
   align-items: stretch;
   justify-items: stretch;
-  border: dotted red 1px;
   border-radius: 7px;
 }
