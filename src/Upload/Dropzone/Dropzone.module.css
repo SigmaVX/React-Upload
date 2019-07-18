@@ -4,7 +4,8 @@
 }
 
 .Dropzone {
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   border: 2px dashed #008297;
   font-size: 16px;
   display: grid;
